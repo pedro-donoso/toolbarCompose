@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,23 +45,45 @@ fun App() {
         item {
             Image(
                 modifier = Modifier
-                    .fillMaxWidth().height(400.dp),
+                    .fillMaxWidth()
+                    .height(400.dp),
                 painter = painterResource(id = R.drawable.camion),
                 contentDescription = "Logo",
                 contentScale = ContentScale.Crop
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
-                text = "Hello",
-                fontSize = 30.sp,
+                text = "Bienvenido",
+                fontSize = 25.sp,
                 color = Color.White,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
-            Text(text = "Suscríbete", color = Color.White)
+            Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = "Hola", color = Color.White)
+            Text(
+                text = "Suscríbete",
+                fontSize = 20.sp,
+                color = Color.White,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa",
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.fillMaxWidth().padding(15.dp),
+                textAlign = TextAlign.Justify
+            )
+
+            Spacer(modifier = Modifier.height(50.dp))
+
         }
     }
 }
