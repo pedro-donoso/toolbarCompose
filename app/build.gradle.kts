@@ -57,6 +57,7 @@ android {
 
 dependencies {
 
+    implementation(libs.generativeai)
     val nav_version = "2.7.7"
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")

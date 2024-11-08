@@ -1,12 +1,14 @@
 package com.example.columnapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,8 +19,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -26,26 +38,65 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        supportActionBar?.title = "LazyColumn y LazyRow"
-
         setContent {
-            App()
+            ViewContainer()
         }
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
 @Composable
-fun App() {
+fun ViewContainer() {
+    Scaffold(
+        topBar = { Toolbar()},
+        content = { Content() },
+        floatingActionButton = { FAB()},
+        floatingActionButtonPosition = FabPosition.End
+    )
+}
+
+@Composable
+fun FAB(){
+    val context = LocalContext.current
+    FloatingActionButton(onClick = {
+        Toast.makeText(context, "Suscríbete", Toast.LENGTH_SHORT).show()
+    }){
+        Text("X")
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Toolbar() {
+    TopAppBar(
+        title = { Text(
+            text = "LazyColumn & LazyRow",
+            color = colorResource(id = R.color.white)
+        )},
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorResource(id = R.color.background)
+        ),
+        modifier = Modifier.height(90.dp)
+    )
+}
+
+@Composable
+fun Content() {
+    var counter by rememberSaveable {
+        mutableIntStateOf(0)
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -60,25 +111,19 @@ fun App() {
                 contentDescription = "Logo",
                 contentScale = ContentScale.Crop
             )
-
-            Row(
-                modifier = Modifier
-                    .padding(18.dp)
-            ) {
+           Row(
+               modifier = Modifier.padding(10.dp)
+           ) {
                 Image(
                     painter = painterResource(id = R.drawable.baseline_favorite_24),
-                    contentDescription = "Like"
+                    contentDescription = "Like",
+                    modifier = Modifier.clickable { counter++ }
                 )
-
-                Text(
-                    text = "1",
+                Text(text = counter
+                    .toString(),
                     color = Color.White,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
+                    modifier = Modifier.padding(start = 4.dp))
             }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
             Text(
                 text = "Bienvenido",
                 fontSize = 25.sp,
@@ -86,9 +131,7 @@ fun App() {
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
-
             Spacer(modifier = Modifier.height(10.dp))
-
             Text(
                 text = "Suscríbete",
                 fontSize = 20.sp,
@@ -96,9 +139,7 @@ fun App() {
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
-
             Spacer(modifier = Modifier.height(10.dp))
-
             Text(
                 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa",
                 fontSize = 15.sp,
@@ -108,14 +149,12 @@ fun App() {
                     .padding(15.dp),
                 textAlign = TextAlign.Justify
             )
-
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 15.dp, end = 15.dp)
             ) {
-
                 items(10) { index ->
                     Image(
                         painter = rememberAsyncImagePainter("https://picsum.photos/id/${index + 1}/200/300"),
@@ -127,9 +166,7 @@ fun App() {
                     )
                 }
             }
-
             Spacer(modifier = Modifier.height(10.dp))
-
             Text(
                 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa",
                 fontSize = 15.sp,
@@ -139,7 +176,6 @@ fun App() {
                     .padding(15.dp),
                 textAlign = TextAlign.Justify
             )
-
             Spacer(modifier = Modifier.height(50.dp))
         }
     }
