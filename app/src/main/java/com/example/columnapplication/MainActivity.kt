@@ -1,12 +1,12 @@
 package com.example.columnapplication
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +19,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -28,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,11 @@ class MainActivity : AppCompatActivity() {
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun App() {
+
+    var counter by rememberSaveable {
+        mutableIntStateOf(0)
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -67,17 +75,16 @@ fun App() {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.baseline_favorite_24),
-                    contentDescription = "Like"
+                    contentDescription = "Like",
+                    modifier = Modifier.clickable { counter++ }
                 )
 
-                Text(
-                    text = "1",
+                Text(text = counter
+                    .toString(),
                     color = Color.White,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
-            }
+                    modifier = Modifier.padding(start = 4.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+            }
 
             Text(
                 text = "Bienvenido",
