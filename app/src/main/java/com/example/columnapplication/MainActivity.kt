@@ -61,6 +61,22 @@ fun App() {
                 contentScale = ContentScale.Crop
             )
 
+            Row(
+                modifier = Modifier
+                    .padding(18.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.baseline_favorite_24),
+                    contentDescription = "Like"
+                )
+
+                Text(
+                    text = "1",
+                    color = Color.White,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
