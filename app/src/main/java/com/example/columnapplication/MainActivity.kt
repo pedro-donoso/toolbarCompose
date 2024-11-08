@@ -2,6 +2,7 @@ package com.example.columnapplication
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -35,15 +38,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        supportActionBar?.title = "LazyColumn y LazyRow"
         setContent {
             ViewContainer()
         }
@@ -51,23 +55,40 @@ class MainActivity : AppCompatActivity() {
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
 @Composable
 fun ViewContainer() {
     Scaffold(
-        content = { Content() }
+        topBar = { Toolbar()},
+        content = { Content() },
+        floatingActionButton = { FAB()},
+        floatingActionButtonPosition = FabPosition.End
     )
+}
+
+@Composable
+fun FAB(){
+    val context = LocalContext.current
+    FloatingActionButton(onClick = {
+        Toast.makeText(context, "Suscríbete", Toast.LENGTH_SHORT).show()
+    }){
+        Text("X")
+    }
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun Toolbar() {
     TopAppBar(
-        title = { Text(text = "LazyColumn & LazyRow", color = colorResource(id = R.color.white))},
+        title = { Text(
+            text = "LazyColumn & LazyRow",
+            color = colorResource(id = R.color.white)
+        )},
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.background)
-        )
+        ),
+        modifier = Modifier.height(90.dp)
     )
 }
 
@@ -90,10 +111,9 @@ fun Content() {
                 contentDescription = "Logo",
                 contentScale = ContentScale.Crop
             )
-            Row(
-                modifier = Modifier
-                    .padding(18.dp)
-            ) {
+           Row(
+               modifier = Modifier.padding(10.dp)
+           ) {
                 Image(
                     painter = painterResource(id = R.drawable.baseline_favorite_24),
                     contentDescription = "Like",
