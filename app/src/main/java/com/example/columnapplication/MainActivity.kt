@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 fun ViewContainer() {
     Scaffold(
         topBar = { Toolbar()},
-        content = { Content() },
+        content = {Content()},
         floatingActionButton = { FAB()},
         floatingActionButtonPosition = FabPosition.End
     )
@@ -72,7 +72,7 @@ fun FAB(){
     FloatingActionButton(onClick = {
         Toast.makeText(context, "Suscríbete", Toast.LENGTH_SHORT).show()
     }){
-        Text("X")
+        Text("Chat")
     }
 }
 
@@ -82,13 +82,14 @@ fun FAB(){
 fun Toolbar() {
     TopAppBar(
         title = { Text(
-            text = "LazyColumn & LazyRow",
-            color = colorResource(id = R.color.white)
+            text = "Block Chain",
+            color = colorResource(id = R.color.black)
         )},
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.background)
         ),
-        modifier = Modifier.height(90.dp)
+        modifier = Modifier
+            .fillMaxWidth()
     )
 }
 
@@ -100,16 +101,16 @@ fun Content() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Red)
+            .background(Color.Blue)
     ) {
         item {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(400.dp),
-                painter = painterResource(id = R.drawable.camion),
+                painter = painterResource(id = R.drawable.vector),
                 contentDescription = "Logo",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
            Row(
                modifier = Modifier.padding(10.dp)
@@ -117,7 +118,8 @@ fun Content() {
                 Image(
                     painter = painterResource(id = R.drawable.baseline_favorite_24),
                     contentDescription = "Like",
-                    modifier = Modifier.clickable { counter++ }
+                    modifier = Modifier
+                        .clickable { counter++ }
                 )
                 Text(text = counter
                     .toString(),
